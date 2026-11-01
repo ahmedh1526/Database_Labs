@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Database SQL Exam — Complete Lab Guide</title>
+<style>
+:root{--bg:#0b1120;--panel:#131e31;--panel2:#18263d;--ink:#edf3ff;--muted:#a6b5cc;--blue:#78a9ff;--line:#2a3a55;--green:#70d6ad;--code:#080e19;--soft:#1d3150;--gold:#f4c875}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#172744 0%,var(--bg) 45%);color:var(--ink);font:15px/1.7 Inter,Segoe UI,Arial,sans-serif}
+header{background:linear-gradient(120deg,#101a2d,#17345c 65%,#254b79);color:white;padding:36px max(22px,calc((100% - 1220px)/2)) 30px;border-bottom:1px solid #38577c}
+header h1{font-size:clamp(26px,4vw,40px);line-height:1.2;margin:0 0 10px;letter-spacing:-.5px}header p{color:#d4e3fa;margin:7px 0;max-width:900px}
+.pill{display:inline-block;background:#ffffff14;border:1px solid #ffffff35;border-radius:30px;padding:4px 11px;font-size:12px;margin:5px 5px 0 0}
+.layout{max-width:1220px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:255px 1fr;gap:22px}
+aside{position:sticky;top:14px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 12px 35px #0004}
+aside h3{margin:0 0 10px;font-size:14px}nav a{display:block;color:#c2d1e8;text-decoration:none;padding:9px 11px;border-radius:9px;margin:3px 0;font-weight:600}nav a:hover,nav a.active{background:var(--soft);color:#a9c9ff}
+main{min-width:0}.intro,.schema,.question,.note{background:linear-gradient(145deg,#152239,#111c2e);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 8px 26px #0002}
+h2{margin:0 0 12px;font-size:23px}h3{margin:0 0 9px;font-size:18px}.muted{color:var(--muted)}.lab{scroll-margin-top:18px;margin:28px 0 13px;padding:16px 19px;border-radius:13px;background:linear-gradient(100deg,#1a3152,#17263e);border:1px solid #34527b;border-left:5px solid var(--blue)}
+.lab h2{margin:0}.qhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.tag{font-size:11px;font-weight:700;color:#a9c9ff;background:#20395e;border-radius:20px;padding:4px 9px;white-space:nowrap}
+details{border:1px solid var(--line);border-radius:12px;margin:12px 0;background:#101b2c;overflow:hidden}summary{cursor:pointer;padding:13px 15px;font-weight:700;list-style:none;color:#e5eeff}summary::-webkit-details-marker{display:none}summary:after{content:"＋";float:right;color:var(--blue)}details[open] summary:after{content:"−"}.inside{padding:0 15px 16px}
+.question p{margin:7px 0}.code{position:relative;background:var(--code);color:#e8eef8;border:1px solid #263752;border-radius:10px;padding:16px;overflow:auto;font:13px/1.7 Consolas,Monaco,monospace;white-space:pre;margin:11px 0}
+.copy{float:right;background:#263d5c;color:white;border:1px solid #49658b;border-radius:7px;padding:5px 9px;cursor:pointer;font-size:12px}.explain{background:#1a2a42;border-left:3px solid #78a9ff;padding:11px 14px;border-radius:8px;margin:9px 0;color:#dbe7fa}.explain b{color:#a9c9ff}.term{color:#83e0bd;font-weight:700}.warn{background:#352b1a;border-left:4px solid var(--gold);padding:12px 14px;border-radius:8px;margin:12px 0;color:#ffedc8}.good{background:#14352f;border-left:4px solid #40bd91;padding:12px 14px;border-radius:8px;margin:12px 0;color:#d4fff0}
+ul{padding-left:22px}.search{width:100%;padding:11px 13px;background:#0d1727;color:var(--ink);border:1px solid var(--line);border-radius:9px;margin:8px 0 12px;font-size:14px}.search::placeholder{color:#8294ad}.small{font-size:13px}.schema pre{white-space:pre-wrap;background:#0d1727;padding:13px;border:1px solid var(--line);border-radius:9px;overflow:auto;font-size:13px;color:#dce8fa}
+footer{text-align:center;color:var(--muted);padding:30px}
+a{color:#9bc2ff}
+@media(max-width:800px){.layout{display:block}aside{position:static;margin-bottom:15px}nav{display:grid;grid-template-columns:repeat(2,1fr)}}
+</style><style>.arabic-note,.arabic-explanation{display:block;margin-top:6px;color:#9eb3cf;direction:rtl;text-align:left;font-family:Tahoma,Arial,sans-serif}.english-explanation{color:#f0f5ff}.question-pair{line-height:1.8}.question-pair .arabic-note{margin-top:5px}</style><style>.english-question{font-weight:700;color:#f0f5ff}.arabic-note{display:block;margin-top:5px;color:#9eb3cf;direction:rtl;text-align:left;font-family:Tahoma,Arial,sans-serif}</style></head>
+<body>
+<header><h1>Database SQL — Exam Study Website</h1>
+<p>Your complete SQL exam guide, built only from the uploaded lab questions, solutions, and schemas.</p>
+<div><span class="pill">Labs 1–5</span><span class="pill">Line-by-line explanations</span><span class="pill">Search questions</span><span class="pill">SQL Server / T-SQL</span></div>
+<p class="small">Lab 5 SQL Jobs are excluded from this study guide, as requested.</p></header>
+<div class="layout">
+<aside><h3>Labs &amp; navigation</h3><input class="search" id="search" placeholder="Search for a question or SQL keyword..."/>
+<nav><a href="#start">ابدأ هنا</a><a href="#lab1">Lab 1 — General Revision</a><a href="#lab2">Lab 2 — Complex Queries</a><a href="#lab3">Lab 3 — Stored Procedures</a><a href="#lab4">Lab 4 — Functions</a><a href="#lab5">Lab 5 — Functions &amp; Security</a><a href="#schemas">Schemas</a></nav><p class="muted small">Search to filter questions. Select a question title to open its answer and explanation.</p></aside>
+<main>
+<section class="intro" id="start"><h2>How to study</h2>
+<p>For each question: read the task, study the original SQL answer, then follow the explanation line by line.</p>
+<div class="warn">Schema note: Lab 1 uses <code>Order</code>, while the Store Schema and Labs 3–5 use <code>Orderr</code>. Lab 1 uses <code>Order_details</code>, while the schema uses <code>Order_Details</code>. The original lab answers are shown without silently changing their SQL.</div>
+<p class="muted small">All explanations are based on the uploaded labs. No outside questions or solutions have been added.</p><p class="muted small">Format: English explanation first, followed by a simple Egyptian Arabic explanation. / الشرح بالإنجليزي الأول، وتحته شرح بسيط بالمصري.</p></section>
+<div class="lab" id="lab1"><h2>Lab 1 — General Revision</h2><div class="muted">Database creation • Tables • Insert • Select • Relationships</div></div>
+<div class="question searchable"><div class="qhead"><h3>Q1. Create Store database</h3><span class="tag">Database</span></div><p class="question-pair"><div class="english-question">Question: Create Store database</div><div class="arabic-note">بالمصري: أنشئ قاعدة بيانات اسمها Store.</div></p><div class="code">CREATE DATABASE Store;</div>
+<div class="explain"><div class="english-explanation">CREATE DATABASE creates a new database. Store is the database name. The semicolon ends the SQL statement.</div><div class="arabic-explanation">بالمصري: CREATE DATABASE بتعمل قاعدة بيانات جديدة، وStore ده اسمها، والـ ; معناها إن الأمر خلص.</div></div></div>
+<div class="question searchable"><h3>Q2. Create all tables inside Store</h3><p class="question-pair"><div class="english-question">Question: Create all tables inside Store</div><div class="arabic-note">بالمصري: إنشاء كل الجداول الموجودة في Store database.</div></p>
+<details open=""><summary>إجابة Customer</summary><div class="inside"><div class="code">CREATE TABLE Customer
+(
+ CustomerID INT NOT NULL,
+ CustFirstName VARCHAR(30),
+ CustLastName VARCHAR(30),
+ CustomerDOB VARCHAR(30),
+ CustomerPhone VARCHAR(30),
+ CustomerAddress VARCHAR(30),
+ CONSTRAINT Customer_pk PRIMARY KEY (CustomerID)
+);</div>
+<div class="explain"><div class="english-explanation">CREATE TABLE Customer creates a table named Customer.</div><div class="arabic-explanation">بالمصري: السطر ده بيعمل جدول اسمه Customer.</div></div><div class="explain"><div class="english-explanation">CustomerID is the customer's ID. INT means a whole number, and NOT NULL means the value cannot be empty.</div><div class="arabic-explanation">بالمصري: ده عمود رقم العميل، لازم يبقى رقم صحيح ومينفعش تسيبه فاضي.</div></div><div class="explain"><div class="english-explanation">CustFirstName and CustLastName store the first and last names. VARCHAR(30) allows text up to 30 characters.</div><div class="arabic-explanation">بالمصري: دول عمود الاسم الأول واسم العيلة، وكل واحد فيهم نص أقصاه 30 حرف.</div></div><div class="explain"><div class="english-explanation">These columns store the date of birth, phone number, and address. The lab defines each one as VARCHAR(30).</div><div class="arabic-explanation">بالمصري: دول تاريخ الميلاد والتليفون والعنوان، واللاب عاملهم نصوص لحد 30 حرف.</div></div><div class="explain"><div class="english-explanation">This creates a constraint named Customer_pk and makes CustomerID the Primary Key. A Primary Key uniquely identifies each customer and cannot be duplicated.</div><div class="arabic-explanation">بالمصري: ده بيخلي CustomerID المفتاح الأساسي؛ يعني كل عميل لازم يبقى ليه رقم مميز ومينفعش يتكرر.</div></div><div class="explain"><div class="english-explanation">); ends the table definition.</div><div class="arabic-explanation">بالمصري: دي بتقفل أمر إنشاء الجدول.</div></div></div></details>
+<details><summary>إجابة Order</summary><div class="inside"><div class="code">CREATE TABLE Order
+(
+ OrderID INT NOT NULL,
+ CID INT NOT NULL,
+ DateOFOrder VARCHAR(30),
+ OrderStatus VARCHAR(30),
+ CONSTRAINT Order_pk PRIMARY KEY (OrderID),
+ CONSTRAINT Customer_Order_fk
+ FOREIGN KEY (CID) REFERENCES Customer (CustomerID)
+);</div>
+<div class="explain"><div class="english-explanation">CREATE TABLE Order creates the orders table, using the exact table name written in Lab 1.</div><div class="arabic-explanation">بالمصري: ده بيعمل جدول الطلبات بالاسم المكتوب في اللاب.</div></div><div class="explain"><div class="english-explanation">OrderID stores the order number as an integer, and it cannot be NULL.</div><div class="arabic-explanation">بالمصري: ده رقم الطلب، لازم يبقى رقم ومينفعش يبقى فاضي.</div></div><div class="explain"><div class="english-explanation">CID stores the ID of the customer linked to this order. It cannot be NULL.</div><div class="arabic-explanation">بالمصري: ده رقم العميل صاحب الطلب، ولازم يكون موجود.</div></div><div class="explain"><div class="english-explanation">DateOFOrder and OrderStatus store the order date and status as text, up to 30 characters each.</div><div class="arabic-explanation">بالمصري: دول تاريخ الطلب وحالته، وكل واحد نص أقصاه 30 حرف.</div></div><div class="explain"><div class="english-explanation">OrderID is the Primary Key, so each order must have a unique order number.</div><div class="arabic-explanation">بالمصري: رقم الطلب هو المفتاح الأساسي، يعني مينفعش طلبين يبقوا بنفس الرقم.</div></div><div class="explain"><div class="english-explanation">This Foreign Key links CID in the Order table to CustomerID in Customer. The referenced customer must already exist.</div><div class="arabic-explanation">بالمصري: ده بيربط الطلب بالعميل؛ فلازم رقم العميل اللي في الطلب يكون موجود فعلًا في جدول Customer.</div></div></div></details>
+<details><summary>إجابة Product</summary><div class="inside"><div class="code">CREATE TABLE Product
+(
+ PID INT NOT NULL,
+ PName VARCHAR(20),
+ PDescription VARCHAR(30),
+ CONSTRAINT Product_pk PRIMARY KEY (PID)
+);</div><div class="explain"><div class="english-explanation">CREATE TABLE Product creates a table named Product.</div><div class="arabic-explanation">بالمصري: ده بيعمل جدول اسمه Product للمنتجات.</div></div><div class="explain"><div class="english-explanation">PID stores the product ID as an integer and cannot be NULL.</div><div class="arabic-explanation">بالمصري: ده رقم المنتج، لازم يبقى رقم ومينفعش يبقى فاضي.</div></div><div class="explain"><div class="english-explanation">PName stores the product name as text with a maximum length of 20 characters.</div><div class="arabic-explanation">بالمصري: ده اسم المنتج، نص أقصاه 20 حرف.</div></div><div class="explain"><div class="english-explanation">PDescription stores the product description as text with a maximum length of 30 characters.</div><div class="arabic-explanation">بالمصري: ده وصف المنتج، نص أقصاه 30 حرف.</div></div><div class="explain"><div class="english-explanation">PID is the Primary Key and uniquely identifies each product.</div><div class="arabic-explanation">بالمصري: PID هو المفتاح الأساسي اللي بيميز كل منتج عن التاني.</div></div></div></details>
+<details><summary>إجابة Order_details</summary><div class="inside"><div class="code">CREATE TABLE Order_details
+(
+ OrderID INT NOT NULL,
+ ProductID INT NOT NULL,
+ Quantity INT,
+ CONSTRAINT Orderdetails_pk PRIMARY KEY (OrderID, ProductID),
+ CONSTRAINT Order_Product_fk FOREIGN KEY (OrderID) REFERENCES Order (OrderID),
+ CONSTRAINT Product_Order_fk FOREIGN KEY (ProductID) REFERENCES Product (PID)
+);</div><div class="explain"><div class="english-explanation">OrderID and ProductID identify the order and the product inside it. Both values are required.</div><div class="arabic-explanation">بالمصري: دول رقم الطلب ورقم المنتج اللي جواه، والاتنين لازم يكون ليهم قيمة.</div></div><div class="explain"><div class="english-explanation">Quantity stores the requested product quantity as an integer.</div><div class="arabic-explanation">بالمصري: ده عدد القطع المطلوبة من المنتج.</div></div><div class="explain"><div class="english-explanation">This is a composite Primary Key made from two columns. The combination of OrderID and ProductID must be unique.</div><div class="arabic-explanation">بالمصري: المفتاح الأساسي هنا مكوّن من عمودين مع بعض؛ نفس الطلب مينفعش يتكرر فيه نفس المنتج مرتين كسجلين.</div></div><div class="explain"><div class="english-explanation">This Foreign Key connects the order details to an OrderID that exists in the Order table.</div><div class="arabic-explanation">بالمصري: بيربط تفاصيل الطلب برقم طلب موجود فعلًا في جدول الطلبات.</div></div><div class="explain"><div class="english-explanation">This Foreign Key connects the order details to a product that exists in Product.</div><div class="arabic-explanation">بالمصري: بيربط تفاصيل الطلب بمنتج موجود فعلًا في جدول Product.</div></div><div class="good">الفكرة: Order_details هو جدول الربط بين Order وProduct، وبيخزن كمان Quantity.</div></div></details></div>
+<div class="question searchable"><h3>Q3. Insert 3 rows into each relation</h3><p class="question-pair"><div class="english-question">Question: Insert 3 rows into each relation</div><div class="arabic-note">بالمصري: أدخل 3 سجلات في كل جدول.</div></p>
+<details><summary>Customer — الإجابة والشرح</summary><div class="inside"><div class="code">INSERT INTO Customer VALUES ('1', 'Mark', 'Smith', '26/01/1993', '01001589678', 'New Cairo');
+INSERT INTO Customer VALUES ('2', 'Marhia', 'John', '14/05/1990', '05454784328', 'Montana');
+INSERT INTO Customer VALUES ('3', 'Steven', 'Branden', '18/12/1960', '021654125845', 'New Jersy');</div><p><b>INSERT INTO Customer:</b> أضف سجلًا جديدًا إلى جدول Customer.</p><p><b>VALUES (...):</b> القيم بالترتيب نفسه لتعريف الأعمدة: CustomerID ثم الاسم الأول ثم اسم العائلة ثم تاريخ الميلاد ثم الهاتف ثم العنوان.</p><p>كل أمر من الثلاثة يضيف عميلًا واحدًا؛ لذلك أصبح لدينا 3 عملاء.</p></div></details>
+<details><summary>Order — الإجابة والشرح</summary><div class="inside"><div class="code">INSERT INTO Order VALUES ('101', '1', '26/7/2019', 'Delivered');
+INSERT INTO Order VALUES ('102', '2', '26/8/2019', 'Delivered');
+INSERT INTO Order VALUES ('103', '3', '26/9/2019', 'NotDelivered');</div><p>كل سطر يضيف طلبًا. ترتيب القيم: OrderID، ثم CID (رقم العميل)، ثم تاريخ الطلب، ثم حالة الطلب. أول طلبين للعميلين 1 و2 وتم تسليمهما، والثالث للعميل 3 وحالته NotDelivered.</p></div></details>
+<details><summary>Product — الإجابة والشرح</summary><div class="inside"><div class="code">INSERT INTO Product VALUES ('201', 'TV', 'Smart TV');
+INSERT INTO Product VALUES ('202', 'Camera', 'Sony Camera');
+INSERT INTO Product VALUES ('203', 'Mobile', 'Iphone11');</div><p>ترتيب القيم: PID رقم المنتج، PName اسمه، PDescription وصفه. تم إدخال TV وCamera وMobile.</p></div></details>
+<details><summary>Order_details — الإجابة والشرح</summary><div class="inside"><div class="code">INSERT INTO Order_details VALUES ('101', '201', '10');
+INSERT INTO Order_details VALUES ('102', '202', '5');
+INSERT INTO Order_details VALUES ('103', '203', '15');</div><p>ترتيب القيم: OrderID، ProductID، Quantity. يعني الطلب 101 يحتوي المنتج 201 بكمية 10، والطلب 102 المنتج 202 بكمية 5، والطلب 103 المنتج 203 بكمية 15.</p><p class="muted">الربط هنا لازم يطابق أرقام موجودة مسبقًا في Order وProduct بسبب الـForeign Keys.</p></div></details></div>
+<div class="question searchable"><h3>Q4. Retrieve all customers information</h3><p class="question-pair"><div class="english-question">Question: Retrieve all customers information</div><div class="arabic-note">بالمصري: اعرض كل بيانات العملاء.</div></p><div class="code">SELECT *
+FROM Customer;</div><div class="explain"><div class="english-explanation">SELECT chooses the data you want to display.</div><div class="arabic-explanation">بالمصري: SELECT بتحدد إيه البيانات اللي عايز تطلعها.</div></div><div class="explain"><div class="english-explanation">The asterisk (*) means all columns, not just one column.</div><div class="arabic-explanation">بالمصري: النجمة معناها هات كل الأعمدة.</div></div><div class="explain"><div class="english-explanation">FROM Customer tells SQL to read the data from the Customer table.</div><div class="arabic-explanation">بالمصري: FROM بتقول هات البيانات من جدول Customer.</div></div></div>
+<div class="question searchable"><h3>Q5. Retrieve product name, ID and quantity</h3><p class="question-pair"><div class="english-question">Question: Retrieve product name, ID and quantity</div><div class="arabic-note">بالمصري: اعرض اسم المنتج ورقمه وكميته.</div></p><div class="code">SELECT PID, PName, Quantity
+FROM Product, Order_Details
+WHERE Product.PID = Order_Details.ProductID;</div><div class="explain"><div class="english-explanation">This SELECT displays only the three listed columns: PID, PName, and Quantity.</div><div class="arabic-explanation">بالمصري: هنا بنطلع الأعمدة التلاتة دول بس.</div></div><div class="explain"><div class="english-explanation">The query reads Product for the product name and ID, and Order_Details for the quantity.</div><div class="arabic-explanation">بالمصري: محتاجين جدول Product عشان الاسم والرقم، وجدول Order_Details عشان الكمية.</div></div><div class="explain"><div class="english-explanation">This condition joins the tables by matching Product.PID with Order_Details.ProductID, so each quantity belongs to the correct product.</div><div class="arabic-explanation">بالمصري: ده شرط الربط؛ بيطابق رقم المنتج في الجدولين عشان كل كمية تطلع جنب المنتج الصح.</div></div></div>
+<div class="question searchable"><h3>Q6. Customers whose orders are delivered</h3><p class="question-pair"><div class="english-question">Question: Customers whose orders are delivered</div><div class="arabic-note">بالمصري: اعرض Customer ID وFirst Name للعملاء الذين طلباتهم تم تسليمها.</div></p><details open=""><summary>الحل الأول — باستخدام WHERE</summary><div class="inside"><div class="code">SELECT CustomerID, CustFirstName, OrderID, OrderStatus
+FROM Customer, Order
+WHERE CustomerID = CID AND OrderStatus = 'Delivered';</div><p><b>SELECT:</b> الأعمدة المطلوب إظهارها: رقم العميل واسمه الأول ورقم الطلب وحالة الطلب.</p><p><b>FROM Customer, Order:</b> نقرأ من جدول العملاء وجدول الطلبات معًا.</p><p><b>CustomerID = CID:</b> يربط طلب كل عميل بصاحبه.</p><p><b>AND OrderStatus = 'Delivered':</b> يضيف شرطًا ثانيًا؛ لا يعرض إلا الطلبات التي حالتها Delivered.</p></div></details><details><summary>الحل الثاني — باستخدام JOIN</summary><div class="inside"><div class="code">SELECT CustomerID, CustFirstName, OrderID, OrderStatus
+FROM Customer JOIN Order
+ON CustomerID = CID
+WHERE OrderStatus = 'Delivered';</div><p><b>FROM Customer JOIN Order:</b> ادمج الجدولين باستخدام JOIN.</p><p><b>ON CustomerID = CID:</b> يحدد العمودين اللذين يتم الربط عليهما.</p><p><b>WHERE OrderStatus = 'Delivered':</b> يفلتر النتائج لتظهر الطلبات المسلّمة فقط.</p><div class="good">الحلان يحققان نفس المطلوب في ورقة اللاب: الأول يكتب الجدولين مع شرط الربط في WHERE، والثاني يكتب الربط صراحةً باستخدام JOIN وON.</div></div></details></div>
+<div class="lab" id="lab2"><h2>Lab 2 — Complex Queries</h2><div class="muted">Subqueries • MAX • JOIN • DISTINCT • IN</div></div>
+<div class="question searchable"><h3>Q1. Dependents of employees in Research department</h3><p><div class="english-question">Question: Dependents of employees in Research department</div><div class="arabic-note">بالمصري: Retrieve the names of the dependents that have employee relatives working in the research department. بالمصري: هات أسماء الـDependents اللي أقاربهم الموظفين شغالين في قسم Research.</div></p><div class="code">SELECT Dependent_name AS 'Dependents of Research Dept Employees'
+FROM Dependent
+WHERE Essn IN (
+    SELECT Ssn
+    FROM Dept, Employee
+    WHERE Dept.Dnumber = Employee.Dno
+      AND Dept.Dname = 'Research'
+);</div><p><b>SELECT Dependent_name:</b> نريد اسم الشخص المعال من جدول Dependent.</p><p><b>AS '...':</b> يضع اسمًا بديلًا لعنوان العمود في النتيجة، وAS معناها Alias = اسم مستعار.</p><p><b>FROM Dependent:</b> المصدر الأساسي للأسماء.</p><p><b>WHERE Essn IN (...):</b> لا تعرض إلا السجلات التي رقم الموظف Essn الخاص بها موجود ضمن نتيجة الاستعلام الداخلي. <code>IN</code> معناها ضمن مجموعة قيم.</p><p><b>SELECT Ssn FROM Dept, Employee:</b> الاستعلام الداخلي يبحث عن أرقام الموظفين.</p><p><b>Dept.Dnumber = Employee.Dno:</b> يربط الموظف بالقسم الذي يعمل فيه.</p><p><b>Dept.Dname = 'Research':</b> يحصر الموظفين في قسم Research فقط.</p><div class="good">الترتيب المنطقي: الاستعلام الداخلي يجيب أرقام موظفي Research، والخارجي يجيب أسماء الـDependents المرتبطين بأرقام الموظفين دي.</div></div>
+<div class="question searchable"><h3>Q2. Maximum salary for employees working on Zamalek project</h3><p class="question-pair"><div class="english-question">Question: Maximum salary for employees working on Zamalek project</div><div class="arabic-note">بالمصري: اعرض أكبر مرتب للموظفين الذين يعملون على المشروع الموجود في Zamalek.</div></p><details open=""><summary>الحل الأول</summary><div class="inside"><div class="code">SELECT MAX(Salary) AS 'Max salary of employees working on projects in Zamalek'
+FROM Employee, Works_On
+WHERE Essn = Ssn
+  AND Pno IN (
+      SELECT Pnumber
+      FROM Project
+      WHERE Project.Plocation = 'Zamalek'
+  );</div><p><b>MAX(Salary):</b> دالة <code>MAX</code> ترجع أكبر قيمة في عمود Salary.</p><p><b>AS:</b> اسم العمود الناتج يظهر بالعنوان المكتوب.</p><p><b>FROM Employee, Works_On:</b> نحتاج مرتب الموظف من Employee، ومشروعات الموظف من Works_On.</p><p><b>Essn = Ssn:</b> ربط الموظف بسجل عمله على المشروع.</p><p><b>AND Pno IN (...):</b> نحتفظ فقط بسجلات العمل التي رقم مشروعها موجود في نتيجة الاستعلام الداخلي.</p><p><b>SELECT Pnumber FROM Project:</b> هات أرقام المشروعات.</p><p><b>Project.Plocation = 'Zamalek':</b> اختار المشروع الذي موقعه Zamalek.</p></div></details><details><summary>الحل الثاني البديل</summary><div class="inside"><div class="code">SELECT MAX(Salary) AS 'Max salary of employees working on projects in Zamalek'
+FROM Employee
+WHERE Ssn IN (
+    SELECT Essn
+    FROM Project, Works_On
+    WHERE Pnumber = Pno
+      AND Project.Plocation = 'Zamalek'
+);</div><p><b>FROM Employee:</b> المرتبات من جدول الموظفين.</p><p><b>WHERE Ssn IN (...):</b> نختار الموظفين الذين أرقامهم ضمن نتيجة الاستعلام الداخلي.</p><p><b>SELECT Essn FROM Project, Works_On:</b> نبحث عن أرقام الموظفين الذين يعملون على المشروعات.</p><p><b>Pnumber = Pno:</b> ربط المشروع بسجل العمل عليه.</p><p><b>Project.Plocation = 'Zamalek':</b> تحديد المشروعات الموجودة في Zamalek.</p><p><b>MAX(Salary):</b> بعد تحديد الموظفين المناسبين، نرجع أعلى مرتب.</p><div class="good">الاختلاف: الحل الأول يربط Employee مع Works_On في الاستعلام الخارجي، والثاني يجعل تحديد الموظفين داخل Subquery.</div></div></details></div>
+<div class="question searchable"><h3>Q3. Project with maximum number of hours</h3><p class="question-pair"><div class="english-question">Question: Project with maximum number of hours</div><div class="arabic-note">بالمصري: اعرض اسم المشروع الذي لديه أكبر عدد ساعات.</div></p><div class="code">SELECT Pname AS 'Project with maximum hours'
+FROM Project JOIN Works_On
+ON Project.Pnumber = Works_On.Pno
+WHERE Works_On.Hrs = (
+    SELECT MAX(Hrs)
+    FROM Works_On
+);</div><p><b>SELECT Pname:</b> المطلوب اسم المشروع.</p><p><b>AS:</b> عنوان بديل للعمود.</p><p><b>FROM Project JOIN Works_On:</b> نربط بيانات المشروع بساعات العمل عليه.</p><p><b>ON Project.Pnumber = Works_On.Pno:</b> رقم المشروع في Project يساوي رقم المشروع في Works_On.</p><p><b>WHERE Works_On.Hrs = (...):</b> نختار السجل الذي عدد ساعاته يساوي أكبر عدد ساعات.</p><p><b>SELECT MAX(Hrs) FROM Works_On:</b> الاستعلام الداخلي يحسب أكبر قيمة في Hrs.</p></div>
+<div class="question searchable"><h3>Q4. Department names without duplication with female dependents</h3><p class="question-pair"><div class="english-question">Question: Department names without duplication with female dependents</div><div class="arabic-note">بالمصري: اعرض أسماء الأقسام بدون تكرار، بحيث يكون بها موظفون لديهم معالون إناث.</div></p><div class="code">SELECT DISTINCT Dname AS 'Departments having employees with female dependents'
+FROM Dept, Employee
+WHERE Employee.Dno = Dept.Dnumber
+  AND Ssn IN (
+      SELECT Essn
+      FROM Dependent
+      WHERE Sex = 'F'
+  );</div><p><b>DISTINCT Dname:</b> DISTINCT معناها إزالة التكرار؛ لأن أكثر من موظف في نفس القسم ممكن يحقق الشرط.</p><p><b>FROM Dept, Employee:</b> نحتاج اسم القسم وبيانات الموظف.</p><p><b>Employee.Dno = Dept.Dnumber:</b> ربط كل موظف بقسمه.</p><p><b>Ssn IN (...):</b> الموظف لازم يكون رقمه موجودًا في نتيجة الاستعلام الداخلي.</p><p><b>SELECT Essn FROM Dependent:</b> استخرج أرقام الموظفين أصحاب المعالين.</p><p><b>Sex = 'F':</b> اشترط أن يكون جنس المعال F.</p></div>
+<div class="question searchable"><h3>Q5. Employees living in the same location as their project</h3><p class="question-pair"><div class="english-question">Question: Employees living in the same location as their project</div><div class="arabic-note">بالمصري: اعرض أسماء الموظفين الذين يسكنون في نفس مكان المشروع الذي يعملون عليه.</div></p><div class="code">SELECT Fname + '' + Lname AS 'Full name'
+FROM Employee
+WHERE Ssn IN (
+    SELECT Essn
+    FROM Project, Works_On
+    WHERE Pno = Pnumber
+      AND Emp_address = Plocation
+);</div><p><b>Fname + '' + Lname:</b> علامة <code>+</code> هنا تجمع النصوص؛ يتم جمع الاسم الأول مع نص فارغ ثم اسم العائلة.</p><p><b>AS 'Full name':</b> اسم مستعار للعمود الناتج.</p><p><b>FROM Employee:</b> نعرض أسماء الموظفين.</p><p><b>Ssn IN (...):</b> نختار الموظف إذا كان رقمه ضمن الموظفين الذين حققوا الشرط.</p><p><b>SELECT Essn FROM Project, Works_On:</b> الاستعلام الداخلي يجيب رقم الموظف المرتبط بمشروع.</p><p><b>Pno = Pnumber:</b> ربط سجل عمل الموظف بالمشروع.</p><p><b>Emp_address = Plocation:</b> الشرط الأساسي: عنوان الموظف يساوي مكان المشروع.</p></div>
+<div class="lab" id="lab3"><h2>Lab 3 — Stored Procedures</h2><div class="muted">CREATE PROCEDURE • Parameters • OUT • PRINT • IF / EXISTS • Nested query</div></div>
+<div class="question searchable"><h3>Q1. Customer ID, first name and order ID for customer 1</h3><p class="question-pair"><div class="english-question">Question: Customer ID, first name and order ID for customer 1</div><div class="arabic-note">بالمصري: اعرض رقم العميل واسمه الأول ورقم الطلب الذي عمله العميل رقم 1.</div></p><div class="code">CREATE PROCEDURE questionA1
+    @customerID INT
+AS
+    SELECT CustomerID, CustFirstName, OrderID
+    FROM Customer, Orderr
+    WHERE CID = CustomerID
+      AND CustomerID = @customerID
+GO
+
+EXEC questionA1 1;</div><p><b>CREATE PROCEDURE questionA1:</b> إنشاء Stored Procedure اسمها questionA1. الإجراء المخزن هو مجموعة أوامر SQL محفوظة باسم.</p><p><b>@customerID INT:</b> متغير إدخال؛ علامة @ في بداية الاسم تعني Parameter/متغير في T-SQL، ونوعه عدد صحيح.</p><p><b>AS:</b> بداية جسم الإجراء الذي سينفذ.</p><p><b>SELECT ...:</b> اختيار رقم العميل والاسم الأول ورقم الطلب.</p><p><b>FROM Customer, Orderr:</b> نحتاج بيانات العميل والطلب.</p><p><b>WHERE CID = CustomerID:</b> ربط الطلب بالعميل.</p><p><b>AND CustomerID = @customerID:</b> فلترة النتائج حسب الرقم الذي أدخله المستخدم.</p><p><b>GO:</b> فاصل Batch في SQL Server لإنهاء مجموعة الأوامر.</p><p><b>EXEC questionA1 1:</b> تشغيل الإجراء وتمرير 1 كقيمة للـParameter.</p></div>
+<div class="question searchable"><h3>Q2. Retrieve order 101 and its status</h3><p class="question-pair"><div class="english-question">Question: Retrieve order 101 and its status</div><div class="arabic-note">بالمصري: اعرض بيانات الطلب 101 وحالته.</div></p><div class="code">CREATE PROCEDURE Getorder_withparametersdefault
+    @orderID INT = 101
+AS
+    SELECT OrderID, OrderStatus
+    FROM Orderr
+    WHERE OrderID = @orderID
+GO
+
+EXEC Getorder_withparametersdefault;</div><p><b>CREATE PROCEDURE:</b> إنشاء إجراء مخزن.</p><p><b>@orderID INT = 101:</b> Parameter اسمه orderID ونوعه INT، والقيمة الافتراضية Default هي 101.</p><p><b>SELECT OrderID, OrderStatus:</b> إظهار رقم الطلب وحالته فقط.</p><p><b>FROM Orderr:</b> البيانات من جدول الطلبات.</p><p><b>WHERE OrderID = @orderID:</b> اختيار الطلب الذي رقمه يساوي قيمة المتغير.</p><p><b>EXEC ... بدون قيمة:</b> لأن للمتغير قيمة افتراضية، يتم استخدام 101 تلقائيًا.</p></div>
+<div class="question searchable"><h3>Q3. Product name and description using OUTPUT parameter</h3><p class="question-pair"><div class="english-question">Question: Product name and description using OUTPUT parameter</div><div class="arabic-note">بالمصري: المستخدم يدخل اسم المنتج مثل TV؛ استرجع الاسم والوصف واطبعهما في الرسالة المطلوبة.</div></p><details open=""><summary>الحل الأول — الطباعة داخل الإجراء</summary><div class="inside"><div class="code">CREATE PROCEDURE GetDescription_Name
+    @Pname VARCHAR(50),
+    @ProductDescriptionAndName VARCHAR(100) OUT
+AS
+    SELECT @ProductDescriptionAndName =
+    (
+        SELECT Pname + ' and its description is ' + Pdescription
+        FROM Product
+        WHERE Pname = @Pname
+    )
+    PRINT 'The Name of the product is ' + @ProductDescriptionAndName
+GO
+
+EXECUTE GetDescription_Name 'TV', OUT;</div><p><b>@Pname VARCHAR(50):</b> قيمة إدخال: اسم المنتج الذي يكتبه المستخدم.</p><p><b>@ProductDescriptionAndName VARCHAR(100) OUT:</b> متغير إخراج؛ OUT معناها أن الإجراء سيرجع قيمة في هذا المتغير للخارج.</p><p><b>SELECT @ProductDescriptionAndName = (...):</b> خزّن نتيجة الاستعلام الداخلي داخل متغير الإخراج.</p><p><b>SELECT Pname + ... + Pdescription:</b> كوّن نصًا واحدًا يجمع اسم المنتج وعبارة الوصف والوصف نفسه.</p><p><b>FROM Product WHERE Pname = @Pname:</b> ابحث في Product عن المنتج الذي اسمه يساوي المدخل.</p><p><b>PRINT:</b> اطبع الرسالة في نافذة Messages.</p><p><b>EXECUTE ... 'TV', OUT:</b> شغّل الإجراء وأرسل TV كمدخل وOUT لتحديد متغير الإخراج. الورقة تعرض الصيغة بهذا الشكل.</p></div></details><details><summary>الحل البديل — اطبع OUTPUT خارج الإجراء</summary><div class="inside"><div class="code">ALTER PROCEDURE GetDescription_Name
+    @Pname VARCHAR(50),
+    @ProductDescriptionAndName VARCHAR(100) OUT
+AS
+    SELECT @ProductDescriptionAndName =
+    (
+        SELECT Pname + ' and its description is ' + Pdescription
+        FROM Product
+        WHERE Pname = @Pname
+    )
+GO
+
+DECLARE @p_d VARCHAR(100)
+EXECUTE GetDescription_Name 'TV', @p_d OUT
+PRINT 'The Name of the product is ' + @p_d</div><p><b>ALTER PROCEDURE:</b> تعديل إجراء موجود بدل إنشاء واحد جديد.</p><p><b>DECLARE @p_d VARCHAR(100):</b> إنشاء متغير خارجي لاستقبال الناتج.</p><p><b>EXECUTE ... @p_d OUT:</b> تمرير المتغير كـOutput parameter ليتم ملؤه من داخل الإجراء.</p><p><b>PRINT ... + @p_d:</b> طباعة الناتج بعد انتهاء الإجراء.</p></div></details><details><summary>حل آخر موجود في اللاب — ProductDescription</summary><div class="inside"><div class="code">CREATE PROCEDURE ProductDescription
+    @Pname VARCHAR(20),
+    @PDescription VARCHAR(30) OUT
+AS
+    SELECT @PDescription = PDescription
+    FROM Product
+    WHERE PName = @Pname;
+
+    PRINT 'The name of the product is ' + @Pname
+        + ' and its description is ' + @PDescription;
+GO
+
+EXEC ProductDescription 'TV', OUT;</div><p><b>@Pname:</b> اسم المنتج كمدخل.</p><p><b>@PDescription ... OUT:</b> متغير إخراج مخصص للوصف فقط.</p><p><b>SELECT @PDescription = PDescription:</b> خزّن وصف المنتج في متغير الإخراج.</p><p><b>WHERE PName = @Pname:</b> اختار المنتج المطلوب.</p><p><b>PRINT:</b> اجمع اسم المنتج والوصف واطبع الرسالة.</p></div></details></div>
+<div class="question searchable"><h3>Q4. Calculate area of a circle</h3><p class="question-pair"><div class="english-question">Question: Calculate area of a circle</div><div class="arabic-note">بالمصري: احسب مساحة الدائرة باستخدام A = PI × r × r واعتبر PI = 3.14.</div></p><details open=""><summary>الحل الأول</summary><div class="inside"><div class="code">CREATE PROCEDURE CalculateTheAreaOfCicrle
+    @Radius FLOAT,
+    @area FLOAT OUT
+AS
+    SELECT @area = @Radius * @Radius * 3.14;
+GO
+
+DECLARE @Area FLOAT
+EXECUTE CalculateTheAreaOfCicrle 5, @Area OUT
+PRINT 'The area of a circle is:'
+PRINT @Area</div><p><b>@Radius FLOAT:</b> نصف القطر مدخل، ونوع FLOAT يسمح بقيم عشرية.</p><p><b>@area FLOAT OUT:</b> متغير إخراج لتخزين المساحة.</p><p><b>SELECT @area = ...:</b> احسب نصف القطر × نصف القطر × 3.14 وخزّن الناتج في @area.</p><p><b>DECLARE @Area FLOAT:</b> جهّز متغيرًا خارج الإجراء لاستقبال النتيجة.</p><p><b>EXECUTE ... 5, @Area OUT:</b> شغّل الإجراء بنصف قطر 5 واجعل @Area يستقبل الناتج.</p><p><b>PRINT:</b> اطبع جملة توضيحية ثم اطبع قيمة المساحة.</p></div></details><details><summary>الحل الثاني</summary><div class="inside"><div class="code">CREATE OR ALTER PROCEDURE CalculateTheAreaOfCicrle
+    @Radius FLOAT,
+    @area FLOAT OUT
+AS
+    DECLARE @PI FLOAT = 3.14
+    SELECT @area = @Radius * @Radius * @PI;
+    PRINT @area
+GO
+
+DECLARE @Area FLOAT
+EXECUTE CalculateTheAreaOfCicrle 5, @Area OUT</div><p><b>CREATE OR ALTER:</b> أنشئ الإجراء لو غير موجود أو عدّله لو موجود.</p><p><b>DECLARE @PI FLOAT = 3.14:</b> متغير داخلي ثابت القيمة المستخدمة لـPI في المسألة.</p><p><b>SELECT @area = ... * @PI:</b> نفس عملية حساب المساحة، لكن بدل كتابة 3.14 مباشرة نستخدم المتغير @PI.</p><p><b>PRINT @area:</b> اطبع المساحة من داخل الإجراء.</p><p><b>EXECUTE:</b> نفّذ الإجراء بنصف قطر 5 وأرسل متغير الإخراج.</p></div></details></div>
+<div class="question searchable"><h3>Q5. Hide customer and order information using a stored procedure</h3><p class="question-pair"><div class="english-question">Question: Hide customer and order information using a stored procedure</div><div class="arabic-note">بالمصري: إخفاء معلومات الإجراء المخزن الذي يعرض بيانات العميل وطلبه.</div></p><div class="code">CREATE PROCEDURE EncryptCustomerInfoAndTheirOrders
+WITH ENCRYPTION
+AS
+    SELECT CustomerID, CustFirstName, OrderID
+    FROM Customer, Orderr
+    WHERE CID = CustomerID
+GO
+
+EXECUTE EncryptCustomerInfoAndTheirOrders
+EXEC sp_helptext 'EncryptCustomerInfoAndTheirOrders'</div><p><b>CREATE PROCEDURE:</b> إنشاء إجراء مخزن بالاسم المحدد.</p><p><b>WITH ENCRYPTION:</b> الخيار المستخدم في اللاب لإخفاء نص تعريف الإجراء.</p><p><b>SELECT CustomerID, CustFirstName, OrderID:</b> يعرض رقم العميل واسمه الأول ورقم الطلب.</p><p><b>FROM Customer, Orderr:</b> مصدر البيانات جدول العملاء والطلبات.</p><p><b>WHERE CID = CustomerID:</b> ربط كل طلب بالعميل.</p><p><b>EXECUTE:</b> تشغيل الإجراء.</p><p class="question-pair"><b>In simple English: </b> محاولة عرض نص تعريف الإجراء؛ وجود WITH ENCRYPTION هو الفكرة التي يختبرها السؤال.</p></div>
+<div class="question searchable"><h3>Q6. Order ID, status and product name using a procedure</h3><p class="question-pair"><div class="english-question">Question: Order ID, status and product name using a procedure</div><div class="arabic-note">بالمصري: اعرض رقم الطلب وحالته واسم المنتج باستخدام Stored Procedure.</div></p><div class="code">CREATE PROCEDURE Order_prod
+AS
+    SELECT Orderr.OrderID, OrderStatus, PName
+    FROM Product, order_details, Orderr
+    WHERE PID = ProductID
+      AND Orderr.OrderID = order_details.OrderID
+GO
+
+EXECUTE Order_prod;</div><p><b>CREATE PROCEDURE Order_prod:</b> إنشاء إجراء باسم Order_prod.</p><p><b>SELECT Orderr.OrderID, OrderStatus, PName:</b> الأعمدة المطلوبة من الجداول.</p><p><b>FROM Product, order_details, Orderr:</b> نحتاج ثلاثة جداول: المنتج، تفاصيل الطلب، والطلب نفسه.</p><p><b>PID = ProductID:</b> اربط المنتج بتفاصيل الطلب.</p><p><b>Orderr.OrderID = order_details.OrderID:</b> اربط تفاصيل الطلب بالطلب الأصلي حتى نصل إلى حالته.</p><p><b>EXECUTE Order_prod:</b> شغّل الإجراء بدون Parameters لأنه لا يستقبل مدخلات.</p></div>
+<div class="question searchable"><h3>Q7. Product names and order IDs ordered by a customer name</h3><p class="question-pair"><div class="english-question">Question: Product names and order IDs ordered by a customer name</div><div class="arabic-note">بالمصري: اعرض أسماء المنتجات وأرقام الطلبات التي طلبها العميل الذي اسمه الأول Steven، والاسم يتم إدخاله من المستخدم، باستخدام Stored Procedure وNested Queries.</div></p><div class="code">CREATE PROCEDURE ProductNameThatStevenOrder
+    @CustomerFirstName VARCHAR(10)
+AS
+    SELECT Pname, OrderID
+    FROM Product, order_details
+    WHERE PID = ProductID
+      AND OrderID IN (
+          SELECT OrderID
+          FROM Orderr, Customer
+          WHERE CID = CustomerID
+            AND CustFirstName = @CustomerFirstName
+      )
+GO
+
+EXECUTE ProductNameThatStevenOrder @CustomerFirstName = 'Steven';</div><p><b>@CustomerFirstName VARCHAR(10):</b> اسم العميل مدخل من المستخدم.</p><p><b>SELECT Pname, OrderID:</b> نريد اسم المنتج ورقم الطلب.</p><p><b>FROM Product, order_details:</b> المنتج وتفاصيل الطلب.</p><p><b>PID = ProductID:</b> ربط المنتج بتفاصيل الطلب.</p><p><b>OrderID IN (...):</b> لا تعرض إلا الطلبات التي أرقامها موجودة في الاستعلام الداخلي.</p><p><b>SELECT OrderID FROM Orderr, Customer:</b> الاستعلام الداخلي يحدد أرقام طلبات العملاء.</p><p><b>CID = CustomerID:</b> ربط الطلب بالعميل.</p><p><b>CustFirstName = @CustomerFirstName:</b> تحديد العميل بالاسم الذي أدخله المستخدم.</p><p><b>EXECUTE ... = 'Steven':</b> تشغيل الإجراء وإرسال Steven كقيمة للـParameter.</p></div>
+<div class="question searchable"><h3>Extra Q8. Copy selected products into Product2</h3><p class="question-pair"><div class="english-question">Question: Copy selected products into Product2</div><div class="arabic-note">بالمصري: انسخ سجلات من Product إلى جدول آخر باستخدام Stored Procedure، مع اختيار وصف المنتج.</div></p><div class="code">CREATE TABLE Product2
+(
+ PID INT NOT NULL,
+ Pname VARCHAR(10),
+ Pdescription VARCHAR(20),
+ CONSTRAINT Prod_PK2 PRIMARY KEY (PID)
+);
+
+CREATE PROCEDURE ProductInfo
+    @ProductDesc VARCHAR(20)
+AS
+    INSERT INTO Product2
+    SELECT *
+    FROM Product
+    WHERE PDescription = @ProductDesc
+GO
+
+EXEC ProductInfo 'smart tv'
+SELECT * FROM Product2;</div><p><b>CREATE TABLE Product2:</b> إنشاء جدول جديد اسمه Product2.</p><p><b>PID / Pname / Pdescription:</b> أعمدة رقم المنتج واسمه ووصفه.</p><p><b>PRIMARY KEY (PID):</b> رقم المنتج مفتاح أساسي في الجدول الجديد.</p><p><b>CREATE PROCEDURE ProductInfo:</b> إجراء لنسخ المنتجات.</p><p><b>@ProductDesc VARCHAR(20):</b> الوصف الذي سيحدده المستخدم.</p><p><b>INSERT INTO Product2:</b> وجهة النسخ؛ أضف السجلات إلى Product2.</p><p><b>SELECT * FROM Product:</b> اجلب كل أعمدة السجل المطابق من Product.</p><p><b>WHERE PDescription = @ProductDesc:</b> انسخ المنتجات التي يساوي وصفها القيمة المدخلة فقط.</p><p><b>EXEC ProductInfo 'smart tv':</b> شغّل الإجراء لاختيار وصف smart tv.</p><p><b>SELECT * FROM Product2:</b> افحص محتويات الجدول بعد النسخ.</p></div>
+<div class="question searchable"><h3>Extra Q9. CustomerDataCheck — insert if new, update if existing</h3><p class="question-pair"><div class="english-question">Question: CustomerDataCheck — insert if new, update if existing</div><div class="arabic-note">بالمصري: أنشئ إجراءً يفحص العميل: لو موجود يحدث بياناته، ولو غير موجود يضيفه.</div></p><div class="code">CREATE OR ALTER PROC CustomerDataCheck
+    @CustomerID INT,
+    @FirstName VARCHAR(30),
+    @LastName VARCHAR(30),
+    @DOB VARCHAR(30),
+    @phone VARCHAR(30),
+    @CustAddress VARCHAR(30)
+AS
+BEGIN
+    IF (EXISTS(SELECT * FROM Customer WHERE CustomerID = @CustomerID))
+    BEGIN
+        UPDATE Customer
+        SET CustFirstName = @FirstName,
+            CustLastName = @LastName,
+            CustomerDOB = @DOB,
+            CustomerPhone = @phone,
+            CustomerAddress = @CustAddress
+        WHERE CustomerID = @CustomerID
+    END
+    ELSE
+    BEGIN
+        INSERT INTO Customer
+        (CustomerID, CustFirstName, CustLastName, CustomerDOB, CustomerPhone, CustomerAddress)
+        VALUES (@CustomerID, @FirstName, @LastName, @DOB, @phone, @CustAddress)
+    END
+END
+GO
+
+EXECUTE CustomerDataCheck '4', 'Ahmed', 'Samy', '20/01/1982', '01001522722', 'Maadi'
+EXECUTE CustomerDataCheck '5', 'Sara', 'Magdy', '13/05/1986', '01001589999', 'Cairo'
+SELECT * FROM Customer;</div><p><b>CREATE OR ALTER PROC:</b> أنشئ الإجراء أو عدّل الموجود.</p><p><b>Parameters:</b> المتغيرات الستة تستقبل رقم العميل واسمه الأول واسم العائلة وتاريخ الميلاد والهاتف والعنوان.</p><p><b>BEGIN:</b> بداية مجموعة أوامر الإجراء.</p><p><b>IF (EXISTS(SELECT * ...)):</b> EXISTS تختبر هل الاستعلام وجد سجلًا أم لا. هنا هل CustomerID موجود بالفعل؟</p><p><b>UPDATE Customer:</b> لو الشرط صحيح، حدّث سجل العميل.</p><p><b>SET ...:</b> ضع القيم الجديدة في أعمدة الاسم وتاريخ الميلاد والهاتف والعنوان.</p><p><b>WHERE CustomerID = @CustomerID:</b> مهم جدًا: حدّث العميل صاحب الرقم المطلوب فقط.</p><p><b>ELSE:</b> لو العميل غير موجود.</p><p><b>INSERT INTO Customer (...):</b> أضف سجلًا جديدًا مع تحديد أسماء الأعمدة.</p><p><b>VALUES (...):</b> ضع قيم Parameters بالترتيب نفسه للأعمدة.</p><p><b>END / GO:</b> إغلاق الكتل وإنهاء الـBatch.</p><p><b>EXECUTE ...:</b> المثال الأول يمرر ID=4 للتحديث إذا كان موجودًا، والثاني ID=5 للإضافة إذا لم يكن موجودًا.</p><p><b>SELECT *:</b> عرض الجدول للتأكد من النتيجة.</p></div>
+<div class="lab" id="lab4"><h2>Lab 4 — Functions</h2><div class="muted">Scalar functions • Table-valued functions • RETURN</div></div>
+<div class="question searchable"><h3>Q1. Function to retrieve total number of orders</h3><p class="question-pair"><div class="english-question">Question: Function to retrieve total number of orders</div><div class="arabic-note">بالمصري: أنشئ Function ترجع العدد الإجمالي للطلبات.</div></p><div class="code">CREATE FUNCTION NumOfOrders()
+RETURNS INT
+AS
+BEGIN
+    DECLARE @TotalNumOfOrders INT
+    SELECT @TotalNumOfOrders = COUNT(*)
+    FROM Orderr
+    RETURN @TotalNumOfOrders
+END
+
+SELECT dbo.NumOfOrders() AS TheTotal;</div><p><b>CREATE FUNCTION NumOfOrders():</b> إنشاء Function اسمها NumOfOrders ولا تستقبل Parameters؛ الأقواس فارغة.</p><p><b>RETURNS INT:</b> نوع القيمة التي سترجعها الدالة عدد صحيح.</p><p><b>BEGIN:</b> بداية جسم الدالة.</p><p><b>DECLARE @TotalNumOfOrders INT:</b> متغير لتخزين العدد.</p><p><b>SELECT @TotalNumOfOrders = COUNT(*):</b> احسب عدد الصفوف باستخدام COUNT(*) وخزّنه في المتغير.</p><p><b>FROM Orderr:</b> احسب الصفوف من جدول الطلبات.</p><p><b>RETURN @TotalNumOfOrders:</b> أرجع العدد الذي تم حسابه.</p><p><b>SELECT dbo.NumOfOrders() AS TheTotal:</b> استدعاء الدالة. dbo هو الـSchema المستخدم في الاستدعاء، وAS يضع اسمًا للنتيجة.</p></div>
+<div class="question searchable"><h3>Q2. Function to multiply two numbers</h3><p class="question-pair"><div class="english-question">Question: Function to multiply two numbers</div><div class="arabic-note">بالمصري: أنشئ Function تضرب رقمين.</div></p><div class="code">CREATE FUNCTION MultiplyTwoNumbers
+(@Num1 INT, @Num2 INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @Multi INT
+    SELECT @Multi = (@Num1 * @Num2)
+    RETURN @Multi
+END
+
+SELECT dbo.MultiplyTwoNumbers(2,5) AS Multiplication;</div><p><b>CREATE FUNCTION:</b> إنشاء دالة باسم MultiplyTwoNumbers.</p><p><b>@Num1 INT, @Num2 INT:</b> مدخلان من نوع عدد صحيح.</p><p><b>RETURNS INT:</b> ناتج الضرب عدد صحيح.</p><p><b>DECLARE @Multi INT:</b> متغير لتخزين حاصل الضرب.</p><p><b>SELECT @Multi = (@Num1 * @Num2):</b> اضرب المدخل الأول في الثاني وخزّن الناتج.</p><p><b>RETURN @Multi:</b> أرجع حاصل الضرب.</p><p><b>SELECT dbo.MultiplyTwoNumbers(2,5):</b> استدعاء الدالة بالقيمتين 2 و5، واسم النتيجة Multiplication.</p></div>
+<div class="question searchable"><h3>Q3. Get customer first name using customer ID</h3><p class="question-pair"><div class="english-question">Question: Get customer first name using customer ID</div><div class="arabic-note">بالمصري: أنشئ Function ترجع الاسم الأول للعميل عند إدخال Customer ID.</div></p><div class="code">CREATE FUNCTION CustomerFirstName
+(@CustomerID INT)
+RETURNS VARCHAR(20)
+AS
+BEGIN
+    DECLARE @Fname VARCHAR(20)
+    SELECT @Fname = CustFirstName
+    FROM Customer
+    WHERE CustomerID = @CustomerID
+    RETURN @Fname
+END
+
+SELECT dbo.CustomerFirstName(1) AS CustomerFirstName;</div><p><b>@CustomerID INT:</b> رقم العميل الذي سيدخله المستخدم.</p><p><b>RETURNS VARCHAR(20):</b> الدالة سترجع نصًا حتى 20 حرفًا؛ لأن الناتج اسم.</p><p><b>DECLARE @Fname:</b> متغير لتخزين الاسم الأول.</p><p><b>SELECT @Fname = CustFirstName:</b> خذ الاسم الأول من العمود CustFirstName وخزنه في المتغير.</p><p><b>FROM Customer:</b> البحث في جدول العملاء.</p><p><b>WHERE CustomerID = @CustomerID:</b> اختار العميل صاحب الرقم المدخل.</p><p><b>RETURN @Fname:</b> أرجع الاسم.</p><p><b>SELECT dbo.CustomerFirstName(1):</b> استدعاء الدالة للعميل رقم 1.</p></div>
+<div class="question searchable"><h3>Q4. Return customer first name and order ID by customer ID</h3><p class="question-pair"><div class="english-question">Question: Return customer first name and order ID by customer ID</div><div class="arabic-note">بالمصري: أرجع الاسم الأول للعميل وأرقام طلباته عند إدخال رقم العميل.</div></p><details open=""><summary>الحل الأول — Scalar Function</summary><div class="inside"><div class="code">CREATE OR ALTER FUNCTION CustomerNameAndOrder (@CustomerID INT)
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @Fname VARCHAR(100)
+    SELECT @Fname = (
+        SELECT CustFirstName + ' and the order ID is ' + CAST(OrderID AS VARCHAR)
+        FROM Customer, Orderr
+        WHERE CustomerID = CID
+          AND CustomerID = @CustomerID
+    )
+    RETURN @Fname
+END
+
+SELECT dbo.CustomerNameAndOrder(1) AS CustomerOrder;</div><p><b>Scalar Function:</b> دالة ترجع قيمة واحدة؛ هنا نص VARCHAR.</p><p><b>@CustomerID INT:</b> رقم العميل المدخل.</p><p><b>RETURNS VARCHAR(100):</b> الناتج نص بطول حتى 100.</p><p><b>DECLARE @Fname:</b> متغير لتخزين النص الناتج.</p><p><b>SELECT @Fname = (SELECT ...):</b> نتيجة الاستعلام الداخلي تُخزن في المتغير.</p><p><b>CustFirstName + ' and the order ID is ':</b> تكوين جملة نصية تجمع الاسم مع العبارة.</p><p><b>CAST(OrderID AS VARCHAR):</b> تحويل رقم الطلب من رقم إلى نص حتى يمكن دمجه مع النص باستخدام +.</p><p><b>FROM Customer, Orderr:</b> نحتاج جدول العميل والطلبات.</p><p><b>CustomerID = CID:</b> ربط العميل بطلبه.</p><p><b>CustomerID = @CustomerID:</b> تحديد العميل المطلوب.</p><p><b>RETURN @Fname:</b> إرجاع النص.</p></div></details><details><summary>الحل الثاني — Inline Table Function</summary><div class="inside"><div class="code">CREATE FUNCTION CustomerNameAndOrderNew (@CustomerID INT)
+RETURNS TABLE
+AS
+RETURN
+    SELECT CustFirstName, OrderID
+    FROM Customer, Orderr
+    WHERE CustomerID = CID
+      AND CustomerID = @CustomerID;
+
+SELECT * FROM CustomerNameAndOrderNew(1);</div><p><b>RETURNS TABLE:</b> الدالة ترجع جدول نتائج بدل قيمة واحدة.</p><p><b>RETURN SELECT:</b> أرجع نتيجة الاستعلام مباشرة.</p><p><b>SELECT CustFirstName, OrderID:</b> عمود الاسم الأول ورقم الطلب.</p><p><b>FROM Customer, Orderr:</b> المصدران المطلوبان.</p><p><b>CustomerID = CID:</b> ربط العميل بطلبه.</p><p><b>CustomerID = @CustomerID:</b> فلترة العميل حسب الرقم المدخل.</p><p><b>SELECT * FROM CustomerNameAndOrderNew(1):</b> استدعاء الدالة الجدولية وعرض كل أعمدة النتيجة.</p><div class="good">الفرق الظاهر في إجابة اللاب: الأولى ترجع نصًا واحدًا، والثانية ترجع صفوفًا وأعمدة كجدول.</div></div></details></div>
+<div class="question searchable"><h3>Q5. Return all product names with their order IDs</h3><p class="question-pair"><div class="english-question">Question: Return all product names with their order IDs</div><div class="arabic-note">بالمصري: أنشئ Function ترجع أسماء المنتجات مع أرقام الطلبات.</div></p><div class="code">CREATE FUNCTION getProductNameandOrderID()
+RETURNS TABLE
+AS
+RETURN
+    SELECT Pname, OrderID
+    FROM Product, order_details
+    WHERE ProductID = PID;
+
+SELECT * FROM getProductNameandOrderID();</div><p><b>CREATE FUNCTION:</b> إنشاء دالة باسم getProductNameandOrderID بدون مدخلات.</p><p><b>RETURNS TABLE:</b> الناتج جدول يحتوي على صفوف.</p><p><b>RETURN SELECT Pname, OrderID:</b> أرجع اسم المنتج ورقم الطلب.</p><p><b>FROM Product, order_details:</b> اسم المنتج من Product ورقم الطلب من Order_details.</p><p><b>WHERE ProductID = PID:</b> شرط الربط بين رقم المنتج في جدول التفاصيل ورقم المنتج في جدول Product.</p><p><b>SELECT * FROM function():</b> استدعاء الدالة وعرض كل الأعمدة التي ترجعها.</p></div>
+<div class="lab" id="lab5"><h2>Lab 5 — Functions &amp; Database Security</h2><div class="muted">Included: function examples and DCL (GRANT / REVOKE). Excluded: SQL Jobs.</div></div>
+<div class="note"><b>حدود Lab 5 في الموقع:</b> ضمّنت أمثلة Functions وموضوع DCL وأمثلة GRANT وREVOKE فقط. استبعدت قسم SQL Jobs بالكامل، بما فيه خطوات إنشاء الـJob وExample 14، لأنه خارج الامتحان حسب كلامك. تمارين آخر صفحة التي لا تحتوي على حلول في الملف لم أضع لها إجابات مخترعة.</div>
+<div class="question searchable"><h3>Example 1. Function checks whether order target is reached</h3><p class="question-pair"><div class="english-question">Question: Function checks whether order target is reached</div><div class="arabic-note">بالمصري: افحص عدد الطلبات: إذا تجاوز 2 اطبع target is reached، وإلا target is not reached، واعرض الناتج باسم Orders Target.</div></p><div class="code">CREATE OR ALTER FUNCTION NumOfOrders()
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @TotalNumOfOrders INT
+    DECLARE @message VARCHAR(100)
+
+    SELECT @TotalNumOfOrders = COUNT(OrderID)
+    FROM Orderr
+
+    IF (@TotalNumOfOrders &lt; 2)
+        SELECT @message = 'target is not reached'
+    ELSE
+        SELECT @message = 'target is reached'
+
+    RETURN @message
+END
+
+SELECT dbo.NumOfOrders() AS 'Orders Target';</div><p><b>CREATE OR ALTER FUNCTION:</b> إنشاء الدالة أو تعديلها.</p><p><b>RETURNS VARCHAR(100):</b> الناتج رسالة نصية.</p><p><b>DECLARE @TotalNumOfOrders INT:</b> متغير لعدد الطلبات.</p><p><b>DECLARE @message VARCHAR(100):</b> متغير للرسالة التي سترجع.</p><p><b>COUNT(OrderID):</b> عدّ أرقام الطلبات في جدول Orderr.</p><p><b>IF (@TotalNumOfOrders &lt; 2):</b> افحص هل العدد أقل من 2.</p><p><b>SELECT @message = 'target is not reached':</b> لو الشرط صحيح خزّن رسالة أن الهدف لم يتحقق.</p><p><b>ELSE:</b> لو الشرط غير صحيح نفّذ الفرع الآخر.</p><p><b>SELECT @message = 'target is reached':</b> خزّن رسالة أن الهدف تحقق.</p><p><b>RETURN @message:</b> أرجع الرسالة.</p><p><b>AS 'Orders Target':</b> اسم العمود الذي سيظهر في نتيجة الاستدعاء.</p><div class="warn">ملاحظة حرفية من نص السؤال: مكتوب “exceeds 2” (أكبر من 2)، بينما شرط الحل هو <code>&lt; 2</code> ثم ELSE؛ لذلك الكود يجعل العدد 2 أو أكثر يصل إلى target is reached. احفظ شكل الحل كما ورد في اللاب وانتبه للفرق بين صياغة السؤال والشرط المكتوب.</div></div>
+<div class="question searchable"><h3>Example 2. Function returns top 2 Customer records</h3><p class="question-pair"><div class="english-question">Question: Function returns top 2 Customer records</div><div class="arabic-note">بالمصري: أنشئ Function ترجع أول سجلين من Customer.</div></p><div class="code">CREATE OR ALTER FUNCTION CustomerTopTwoRecords()
+RETURNS TABLE
+AS
+RETURN SELECT TOP (2) * FROM Customer;
+
+SELECT * FROM CustomerTopTwoRecords();</div><p><b>RETURNS TABLE:</b> الناتج جدول.</p><p><b>RETURN SELECT:</b> ترجع نتيجة الاستعلام مباشرة.</p><p><b>TOP (2):</b> حدّ النتائج إلى سجلين فقط.</p><p><b>*:</b> كل أعمدة Customer.</p><p><b>SELECT * FROM CustomerTopTwoRecords():</b> استدعاء الدالة وعرض السجلين الناتجين.</p><p class="muted">الملف يشرح أن SELECT TOP تحدد عدد السجلات التي ترجعها النتيجة.</p></div>
+<div class="question searchable"><h3>Example 3. Function displays today's date</h3><p class="question-pair"><div class="english-question">Question: Function displays today's date</div><div class="arabic-note">بالمصري: أنشئ Function تعرض تاريخ اليوم.</div></p><div class="code">CREATE FUNCTION gettodaysdate()
+RETURNS DATE
+AS
+BEGIN
+    DECLARE @thedate DATE
+    SELECT @thedate = GETDATE()
+    RETURN @thedate
+END
+
+SELECT dbo.gettodaysdate() AS 'Todays Date';</div><p><b>RETURNS DATE:</b> الدالة سترجع قيمة تاريخ.</p><p><b>DECLARE @thedate DATE:</b> متغير لتخزين التاريخ.</p><p><b>GETDATE():</b> القيمة التي يستخدمها الحل للحصول على التاريخ/الوقت الحالي، ثم تخزينها في متغير DATE.</p><p><b>RETURN @thedate:</b> إرجاع التاريخ المخزن.</p><p><b>SELECT dbo.gettodaysdate():</b> استدعاء الدالة وعرض الناتج بعنوان Todays Date.</p></div>
+<div class="question searchable"><h3>Example 4. Product information function with NULL option</h3><p class="question-pair"><div class="english-question">Question: Product information function with NULL option</div><div class="arabic-note">بالمصري: أرجع معلومات المنتج حسب Product ID. لو المدخل NULL أرجع كل المنتجات، ولو رقمًا أرجع المنتج صاحب الرقم فقط، في جدول ناتج اسمه ProductsList.</div></p><div class="code">CREATE OR ALTER FUNCTION product_info (@PRODUCT_ID INT)
+RETURNS @ProductsList TABLE
+(
+    Product_Id INT,
+    Product_Dsp VARCHAR(150),
+    Product_Name VARCHAR(100)
+)
+AS
+BEGIN
+    IF @PRODUCT_ID IS NULL
+    BEGIN
+        INSERT INTO @ProductsList (Product_Id, Product_Dsp, Product_Name)
+        SELECT PID, Pdescription, PName
+        FROM Product
+    END
+    ELSE
+    BEGIN
+        INSERT INTO @ProductsList (Product_Id, Product_Dsp, Product_Name)
+        SELECT PID, Pdescription, PName
+        FROM Product
+        WHERE PID = @PRODUCT_ID
+    END
+    RETURN
+END
+GO
+
+SELECT * FROM product_info(NULL);</div><p><b>@PRODUCT_ID INT:</b> مدخل رقم المنتج.</p><p><b>RETURNS @ProductsList TABLE:</b> الدالة ترجع جدولًا اسمه الداخلي @ProductsList، بأعمدة Product_Id وProduct_Dsp وProduct_Name.</p><p><b>AS / BEGIN:</b> بداية جسم الدالة.</p><p><b>IF @PRODUCT_ID IS NULL:</b> افحص هل المستخدم لم يرسل رقمًا (القيمة NULL).</p><p><b>INSERT INTO @ProductsList (...):</b> أدخل النتائج في جدول الإرجاع.</p><p><b>SELECT PID, Pdescription, PName FROM Product:</b> في حالة NULL، انقل بيانات كل المنتجات.</p><p><b>ELSE:</b> لو المستخدم أرسل رقمًا.</p><p><b>WHERE PID = @PRODUCT_ID:</b> في الحالة الثانية، انقل المنتج الذي رقمه يساوي المدخل فقط.</p><p><b>RETURN:</b> أرجع جدول النتائج بعد ملئه.</p><p><b>SELECT * FROM product_info(NULL):</b> استدعاء الدالة بـNULL؛ وبالتالي فرع IF يرجع كل المنتجات.</p></div>
+<div class="question searchable"><h3>DCL. What is Data Control Language?</h3><p class="question-pair"><div class="english-question">Question: DCL. What is Data Control Language?</div><div class="arabic-note">بالمصري: فهم معنى DCL وعلاقته بـGRANT وREVOKE.</div></p><div class="explain"><b>DCL = Data Control Language:</b> لغة التحكم في البيانات؛ تُستخدم لإعداد صلاحيات الوصول إلى قاعدة البيانات.</div><div class="explain"><b>GRANT:</b> منح صلاحية لمستخدم لتنفيذ مهمة على كائن في قاعدة البيانات.</div><div class="explain"><b>REVOKE:</b> سحب صلاحية سبق منحها.</div><div class="explain"><b>DDL:</b> في وصف الملف، اللغة التي تضيف وتحذف كائنات قاعدة البيانات.</div><div class="explain"><b>DML:</b> في وصف الملف، اللغة التي تسترجع وتضيف وتعدّل محتوى قاعدة البيانات.</div></div>
+<div class="question searchable"><h3>GRANT — General syntax</h3><p><div class="english-question">Question: GRANT — General syntax</div><div class="arabic-note">بالمصري: منح صلاحية لمستخدم على كائن.</div></p><div class="code">GRANT privilegeName ON objectName TO userName
+[WITH GRANT OPTION]</div><p><b>GRANT:</b> امنح صلاحية.</p><p><b>privilegeName:</b> اسم الصلاحية مثل SELECT أو INSERT أو UPDATE.</p><p><b>ON objectName:</b> الكائن الذي ستطبق عليه الصلاحية، مثل جدول أو View أو Procedure أو Function.</p><p><b>TO userName:</b> المستخدم الذي سيأخذ الصلاحية، أو PUBLIC.</p><p><b>WITH GRANT OPTION:</b> اختيارية؛ تسمح للمستخدم أن يمنح نفس الصلاحية لمستخدم آخر.</p></div>
+<div class="question searchable"><h3>Example 5. Grant SELECT on Customer to Ahmed</h3><div class="code">GRANT SELECT ON Customer TO [ahmed];</div><p><div class="english-question">Question: Grant SELECT on Customer to Ahmed</div><div class="arabic-note">بالمصري: امنح صلاحية القراءة/الاستعلام SELECT.</div></p><p><b>ON Customer:</b> الصلاحية على جدول Customer.</p><p><b>TO [ahmed]:</b> المستخدم Ahmed هو المستفيد.</p></div>
+<div class="question searchable"><h3>Example 6. Grant SELECT on Customer to PUBLIC</h3><div class="code">GRANT SELECT ON Customer TO PUBLIC;</div><p><div class="english-question">Question: Grant SELECT on Customer to PUBLIC</div><div class="arabic-note">بالمصري: حسب الملف، يشير إلى كل المستخدمين الحاليين والمستقبليين؛ فيكون لهم الحق الممنوح على Customer.</div></p></div>
+<div class="question searchable"><h3>Example 7. Grant SELECT to Ali and allow propagation</h3><div class="code">GRANT SELECT ON Customer TO [ali] WITH GRANT OPTION;</div><p><div class="english-question">Question: Grant SELECT to Ali and allow propagation</div><div class="arabic-note">بالمصري: منح قراءة جدول Customer.</div></p><p><b>TO [ali]:</b> الصلاحية للمستخدم Ali.</p><p><b>WITH GRANT OPTION:</b> Ali يستطيع تمرير/منح الصلاحية لمستخدم آخر.</p></div>
+<div class="question searchable"><h3>Example 8. Grant INSERT to Ahmed with propagation</h3><div class="code">GRANT INSERT ON Product TO [ahmed] WITH GRANT OPTION;</div><p><div class="english-question">Question: Grant INSERT to Ahmed with propagation</div><div class="arabic-note">بالمصري: صلاحية إضافة سجلات.</div></p><p><b>ON Product:</b> على جدول المنتجات.</p><p><b>TO [ahmed]:</b> للمستخدم Ahmed.</p><p><b>WITH GRANT OPTION:</b> يسمح له بمنح الصلاحية لغيره.</p></div>
+<div class="question searchable"><h3>Example 9. Grant multiple privileges on Product</h3><details open=""><summary>الطريقة الأولى</summary><div class="inside"><div class="code">GRANT SELECT, INSERT, DELETE, UPDATE ON Product TO PUBLIC;</div><p><div class="english-question">Question: Grant multiple privileges on Product</div><div class="arabic-note">بالمصري: قراءة البيانات.</div></p><p><b>INSERT:</b> إضافة بيانات.</p><p><b>DELETE:</b> حذف بيانات.</p><p><b>UPDATE:</b> تعديل بيانات.</p><p><b>ON Product TO PUBLIC:</b> الصلاحيات الأربع على Product لكل المستخدمين.</p></div></details><details><summary>الطريقة الثانية الموجودة في اللاب</summary><div class="inside"><div class="code">GRANT ALL ON Product TO PUBLIC;</div><p><b>ALL:</b> الصيغة المختصرة التي يعرضها اللاب لمنح كل الصلاحيات على Product إلى PUBLIC.</p></div></details></div>
+<div class="question searchable"><h3>Grant EXECUTE — General syntax</h3><div class="code">GRANT EXECUTE ON FunctionName / ProcedureName TO User;</div><p><div class="english-question">Question: Grant EXECUTE — General syntax</div><div class="arabic-note">بالمصري: صلاحية تشغيل Function أو Stored Procedure.</div></p><p><b>ON:</b> تحدد اسم الدالة أو الإجراء.</p><p><b>TO User:</b> المستخدم الذي يُسمح له بالتشغيل.</p></div>
+<div class="question searchable"><h3>Example 10. Create maximum quantity function and grant execute to PUBLIC</h3><div class="code">CREATE FUNCTION Get_Maximum_Quantity()
+RETURNS INT
+AS
+BEGIN
+    DECLARE @Max_Quantity INT
+    SELECT @Max_Quantity = MAX(Quantity)
+    FROM Order_Details
+    RETURN @Max_Quantity
+END
+
+GRANT EXECUTE ON dbo.Get_Maximum_Quantity TO PUBLIC;</div><p><div class="english-question">Question: Create maximum quantity function and grant execute to PUBLIC</div><div class="arabic-note">بالمصري: إنشاء دالة لحساب أكبر كمية.</div></p><p><b>RETURNS INT:</b> الناتج عدد صحيح.</p><p><b>DECLARE @Max_Quantity INT:</b> متغير لحفظ أكبر كمية.</p><p><b>MAX(Quantity):</b> استخرج أكبر قيمة في عمود Quantity.</p><p><b>FROM Order_Details:</b> البحث في جدول تفاصيل الطلب.</p><p><b>RETURN:</b> أرجع القيمة الأكبر.</p><p><b>GRANT EXECUTE:</b> امنح صلاحية تشغيل الدالة.</p><p><b>dbo.Get_Maximum_Quantity:</b> اسم الدالة مع الـSchema.</p><p><b>TO PUBLIC:</b> لكل المستخدمين.</p></div>
+<div class="question searchable"><h3>REVOKE — General syntax</h3><div class="code">REVOKE privilegeName ON ObjectName FROM User;</div><p><div class="english-question">Question: REVOKE — General syntax</div><div class="arabic-note">بالمصري: سحب صلاحية.</div></p><p><b>privilegeName:</b> الصلاحية المراد سحبها.</p><p><b>ON ObjectName:</b> الكائن الذي كانت الصلاحية عليه.</p><p><b>FROM User:</b> المستخدم الذي تُسحب منه الصلاحية.</p><div class="good">احفظ الفرق السريع: GRANT معها TO لأنها تمنح للمستخدم، وREVOKE معها FROM لأنها تسحب من المستخدم.</div></div>
+<div class="question searchable"><h3>Example 11. Revoke SELECT on Orderr from PUBLIC</h3><div class="code">REVOKE SELECT ON Orderr FROM PUBLIC;</div><p><div class="english-question">Question: Revoke SELECT on Orderr from PUBLIC</div><div class="arabic-note">بالمصري: اسحب صلاحية القراءة.</div></p><p><b>ON Orderr:</b> على جدول الطلبات.</p><p><b>FROM PUBLIC:</b> من مجموعة كل المستخدمين.</p></div>
+<div class="question searchable"><h3>Example 12. Revoke EXECUTE on Get_Maximum_Quantity</h3><div class="code">REVOKE EXECUTE ON dbo.Get_Maximum_Quantity FROM PUBLIC;</div><p><div class="english-question">Question: Revoke EXECUTE on Get_Maximum_Quantity</div><div class="arabic-note">بالمصري: اسحب صلاحية تشغيل الدالة.</div></p><p><b>ON dbo.Get_Maximum_Quantity:</b> حدد الدالة المقصودة.</p><p><b>FROM PUBLIC:</b> اسحب الصلاحية من PUBLIC.</p></div>
+<div class="question searchable"><h3>Example 13. Revoke four privileges on Order_Details</h3><div class="code">REVOKE SELECT, INSERT, DELETE, UPDATE
+ON Order_Details
+FROM PUBLIC;</div><p><div class="english-question">Question: Revoke four privileges on Order_Details</div><div class="arabic-note">بالمصري: اسحب صلاحيات القراءة والإضافة والحذف والتعديل.</div></p><p><b>ON Order_Details:</b> الصلاحيات على جدول تفاصيل الطلب.</p><p><b>FROM PUBLIC:</b> من جميع المستخدمين.</p></div>
+<div class="schema" id="schemas"><h2>Schemas — الجداول والعلاقات المستخدمة</h2><p>دي أسماء الجداول والأعمدة الأساسية كما ظهرت في ملفّي الـSchema المرفوعين. استخدمها لفهم أسئلة اللابات، خصوصًا أسماء الأعمدة اللي بتتكرر في شروط الربط.</p>
+<details><summary>Store Schema</summary><div class="inside"><pre>Customer
+- CustomerID (Primary Key)
+- CustFirstName
+- CustLastName
+- CustomerDOB
+- CustomerPhone
+- CustomerAddress
+
+Orderr
+- OrderID (Primary Key)
+- CID (Foreign Key → Customer.CustomerID)
+- DateOFOrder
+- OrderStatus
+
+Product
+- PID (Primary Key)
+- PName
+- PDescription
+
+Order_Details
+- OrderID (Foreign Key → Orderr.OrderID)
+- ProductID (Foreign Key → Product.PID)
+- Quantity
+- Primary Key: (OrderID, ProductID)</pre><p><b>العلاقات:</b> Customer واحد يمكن أن يرتبط بطلبات من خلال CID. كل Order_Details يربط Orderr بمنتج Product، ويحتفظ بالكمية.</p></div></details>
+<details><summary>Company Schema</summary><div class="inside"><pre>Dept
+- Dname
+- Dnumber (Primary Key)
+- Mgr_start_date
+- Mgr_ssn
+
+Dept_locations
+- Dnumber (Foreign Key → Dept.Dnumber)
+- Dlocation
+- Primary Key: (Dnumber, Dlocation)
+
+Project
+- Pname
+- Pnumber (Primary Key)
+- Plocation
+- Dnumber (Foreign Key → Dept.Dnumber)
+
+Employee
+- Fname, Minit, Lname
+- Ssn (Primary Key)
+- Bdate, Emp_address, Sex, Salary
+- Super_ssn (Foreign Key → Employee.Ssn)
+- Dno (Foreign Key → Dept.Dnumber)
+
+Dependent
+- Essn (Foreign Key → Employee.Ssn)
+- Dependent_name, Sex, Bdate, Relationship
+- Primary Key: (Essn, Dependent_name)
+
+Works_On
+- Essn (Foreign Key → Employee.Ssn)
+- Pno (Foreign Key → Project.Pnumber)
+- Hrs
+- Primary Key: (Essn, Pno)</pre><p><b>العلاقات المهمة في Lab 2:</b> Employee.Dno مع Dept.Dnumber؛ Dependent.Essn مع Employee.Ssn؛ Works_On.Essn مع Employee.Ssn؛ Works_On.Pno مع Project.Pnumber.</p></div></details></div>
+<div class="intro"><h2>مراجعة سريعة قبل الامتحان</h2><ul><li><b>SELECT:</b> الأعمدة التي تريد عرضها.</li><li><b>FROM:</b> الجدول أو الجداول التي ستقرأ منها.</li><li><b>WHERE:</b> شرط لتصفية الصفوف.</li><li><b>JOIN / ON:</b> ربط الجداول وتحديد أعمدة الربط.</li><li><b>IN:</b> التحقق أن القيمة موجودة داخل مجموعة نتائج.</li><li><b>COUNT(*):</b> عدّ الصفوف.</li><li><b>MAX(column):</b> أكبر قيمة في العمود.</li><li><b>DISTINCT:</b> إزالة التكرار.</li><li><b>Stored Procedure:</b> تُنشأ بـCREATE PROCEDURE وتُشغّل بـEXEC.</li><li><b>Function:</b> تُنشأ بـCREATE FUNCTION وتُرجع قيمة بـRETURN أو جدولًا بـRETURNS TABLE.</li><li><b>OUT:</b> Parameter لإخراج قيمة من Procedure.</li><li><b>GRANT:</b> منح صلاحية باستخدام TO.</li><li><b>REVOKE:</b> سحب صلاحية باستخدام FROM.</li></ul><div class="warn"><b>نقطة الامتحان:</b> لا تخلط بين <code>RETURNS INT / VARCHAR</code> (قيمة واحدة) و<code>RETURNS TABLE</code> (جدول نتائج)، ولا تنسَ شرط الربط بين الجداول في WHERE أو ON.</div></div>
+</main></div><footer>Prepared only from the uploaded Labs 1–5 and the two supplied schemas. Lab 5 SQL Jobs excluded.</footer>
+<script>
+const search=document.getElementById('search');
+search.addEventListener('input',()=>{const q=search.value.toLowerCase().trim();document.querySelectorAll('.searchable').forEach(el=>{el.style.display=el.innerText.toLowerCase().includes(q)?'':'none'});});
+document.querySelectorAll('.code').forEach(el=>{const b=document.createElement('button');b.className='copy';b.textContent='Copy code';b.onclick=()=>{navigator.clipboard.writeText(el.innerText).then(()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Copy code',1200)}).catch(()=>{b.textContent='Select code manually'})};el.prepend(b);});
+</script></body></html>
